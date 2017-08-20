@@ -29,19 +29,24 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<script>
+		var iframe_id = -1;
+
 		// Here's what happens when you send a message
 		document.getElementById('send_button').onclick = function() {
 			var message = document.getElementById("message_area").value;
 			var chat_content = document.getElementById('chat-content');
 			if (message != "") {
+
 				document.getElementById("message_area").value = "";
-				window.parent.postMessage(message, "*");
+				window.parent.postMessage("[" + window.name + "]: " + message, "*");
 				// chat_content.innerHTML += message + "<br>";
 			}
 		};
 
 		// Respond to events... Append message to chat content
 		window.addEventListener('message', function(event) {
+			console.log(event);
+			console.log(event.data);
 			var chat_content = document.getElementById('chat-content');
 			if (event.data != "") {
 				chat_content.innerHTML += event.data + "<br>";

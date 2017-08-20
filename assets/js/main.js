@@ -19,11 +19,12 @@ document.getElementById('add-iframe-button').onclick = function() {
 	var iframe = document.createElement('iframe');
 	iframe.src = 'chat-template.html';
 	iframe.id = "iframe_" + chatcount;
-	iframe.name = "Chatbox_" + chatcount
+	iframe.name = "iframe_" + chatcount
 	iframe.width="280";
 	iframe.height="250";
 	iframe.style="border=0px;"
 
+	
 	var textme = document.createElement('p');
 	textme.innerHTML = "Hello";
 
@@ -33,12 +34,17 @@ document.getElementById('add-iframe-button').onclick = function() {
  	body.appendChild(iframe);
 	document.getElementById("main-panel").appendChild(parent_div);
 	$('.draggable').draggable()
-
+	// appendID(iframe.id);
 };
+
+// function appendID(id) {
+// 	console.log(id);
+// 	var iframe2 = document.getElementById(id).contentWindow;
+// 	iframe2.postMessage("iframe_" + id, "*");
+// }
 
 function listenMessage(msg) {
 	console.log(msg);
-
     var count;
 	for(count = 1; count <= chatcount; count++){
 		var iframe = document.getElementById('iframe_' + count).contentWindow;
