@@ -3,10 +3,10 @@ var chatcount = 0;
 document.getElementById('add-iframe-button').onclick = function() {
 	var parent_div = document.createElement('div');
 	parent_div.style += "height: 300px; width: 300px;";
-	parent_div.style.position = "absolute";
-	parent_div.style.top = (Math.random()*400).toString() + "px";
-	parent_div.style.left = (Math.random()*400).toString() + "px";
-	parent_div.style.margin = '0px';
+	// parent_div.style.position = "absolute";
+	// parent_div.style.top = (Math.random()*400).toString() + "px";
+	// parent_div.style.left = (Math.random()*400).toString() + "px";
+	// parent_div.style.margin = '0px';
 
 	parent_div.className += "panel panel-primary";
  	parent_div.className += " draggable ui-draggable ui-draggable-handle";
