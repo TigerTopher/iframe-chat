@@ -3,14 +3,9 @@ var chatcount = 0;
 document.getElementById('add-iframe-button').onclick = function() {
 	var parent_div = document.createElement('div');
 	parent_div.style += "height: 300px; width: 300px;";
-	// parent_div.style.position = "absolute";
-	// parent_div.style.top = (Math.random()*400).toString() + "px";
-	// parent_div.style.left = (Math.random()*400).toString() + "px";
-	// parent_div.style.margin = '0px';
 
 	parent_div.className += "panel panel-primary";
  	parent_div.className += " draggable ui-draggable ui-draggable-handle";
-	// parent_div.className += " ui-widget-content";
 
 	chatcount ++;
     var heading = document.createElement('div');
@@ -20,18 +15,15 @@ document.getElementById('add-iframe-button').onclick = function() {
     var body = document.createElement('div');
     body.className += "panel-body";
     body.style = "padding: 10px;"
-    // body.innerHTML = "This is the body"
-
-
+ 
 	var iframe = document.createElement('iframe');
 	iframe.src = 'chat-template.html';
-	iframe.id = "Topher";
-
+	iframe.id = "iframe_" + chatcount;
+	iframe.name = "Chatbox_" + chatcount
 	iframe.width="280";
 	iframe.height="250";
 	iframe.style="border=0px;"
 
-	// iframe.style = "position:absolute;"
 	var textme = document.createElement('p');
 	textme.innerHTML = "Hello";
 
@@ -42,12 +34,21 @@ document.getElementById('add-iframe-button').onclick = function() {
 	document.getElementById("main-panel").appendChild(parent_div);
 	$('.draggable').draggable()
 
-//    var text_to_edit = "some text"; window.frames['Topher'].document.body.innerHTML = text_to_edit;
-
-// var fra = document.getElementById('Topher');
-// // following will work on same domain (or subdomain with document.domain set) only
-// var fraContent = fra.contentDocument || fra.contentWindow.document;
-// myLinkHref = fraContent.getElementById('myLinkId').href;
 };
 
+function listenMessage(msg) {
+	console.log(msg);
 
+    var count;
+	for(count = 1; count <= chatcount; count++){
+		var iframe = document.getElementById('iframe_' + count).contentWindow;
+		iframe.postMessage(msg.data, "*"); //send the message and target URI
+	}
+}
+
+if (window.addEventListener) {
+    window.addEventListener("message", listenMessage, false);
+
+} else {
+    window.attachEvent("onmessage", listenMessage);
+}

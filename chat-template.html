@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title> Iframe chat
+		<title>iFrame Chat Template
 		</title>
 
 	</head>
@@ -8,18 +8,17 @@
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 		<div class="panel panel-default">
-		  <div class="panel-body">Chat messages here...</div>
+		  <div class="panel-body" id="chat-content"></div>
 		</div>
 		<div class="input-group">
-			<input type="text" class="form-control">
+			<input type="text" class="form-control" id="message_area">
 		<span class="input-group-btn">
-			<button class="btn btn-default" type="button">Send</button>
+			<button class="btn btn-default" type="button" id="send_button">Send</button>
 		</span>
 		  
 		</div>
 
 	</body>
-	<script src="assets/js/somejq.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
 	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 	  crossorigin="anonymous"></script>
@@ -28,4 +27,25 @@
 	  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
 	  crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script>
+		// Here's what happens when you send a message
+		document.getElementById('send_button').onclick = function() {
+			var message = document.getElementById("message_area").value;
+			var chat_content = document.getElementById('chat-content');
+			if (message != "") {
+				document.getElementById("message_area").value = "";
+				window.parent.postMessage(message, "*");
+				// chat_content.innerHTML += message + "<br>";
+			}
+		};
+
+		// Respond to events... Append message to chat content
+		window.addEventListener('message', function(event) {
+			var chat_content = document.getElementById('chat-content');
+			if (event.data != "") {
+				chat_content.innerHTML += event.data + "<br>";
+			}
+		},false);
+	</script>
 </html> 
