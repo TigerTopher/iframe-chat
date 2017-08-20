@@ -1,5 +1,7 @@
 var chatcount = 0;
+var chat_history = "";
 
+// Joining the chat room
 document.getElementById('add-iframe-button').onclick = function() {
 	var parent_div = document.createElement('div');
 	parent_div.style += "height: 300px; width: 300px;";
@@ -34,21 +36,18 @@ document.getElementById('add-iframe-button').onclick = function() {
  	body.appendChild(iframe);
 	document.getElementById("main-panel").appendChild(parent_div);
 	$('.draggable').draggable()
-	// appendID(iframe.id);
-};
 
-// function appendID(id) {
-// 	console.log(id);
-// 	var iframe2 = document.getElementById(id).contentWindow;
-// 	iframe2.postMessage("iframe_" + id, "*");
-// }
+};
 
 function listenMessage(msg) {
 	console.log(msg);
     var count;
+
+	chat_history += msg.data + "<br>"
+
 	for(count = 1; count <= chatcount; count++){
 		var iframe = document.getElementById('iframe_' + count).contentWindow;
-		iframe.postMessage(msg.data, "*"); //send the message and target URI
+		iframe.postMessage(chat_history, "*"); //send the message and target URI
 	}
 }
 

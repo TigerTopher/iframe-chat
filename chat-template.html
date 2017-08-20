@@ -1,7 +1,6 @@
 <html>
 	<head>
-		<title>iFrame Chat Template
-		</title>
+		<title>iFrame Chat Template</title>
 
 	</head>
 	<body>
@@ -29,7 +28,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<script>
-		var iframe_id = -1;
+		window.parent.postMessage("[system]: " + window.name + " has joined", "*");
 
 		// Here's what happens when you send a message
 		document.getElementById('send_button').onclick = function() {
@@ -39,17 +38,15 @@
 
 				document.getElementById("message_area").value = "";
 				window.parent.postMessage("[" + window.name + "]: " + message, "*");
-				// chat_content.innerHTML += message + "<br>";
 			}
 		};
 
-		// Respond to events... Append message to chat content
+		// Respond to events... Replace message to chat content
 		window.addEventListener('message', function(event) {
-			console.log(event);
-			console.log(event.data);
 			var chat_content = document.getElementById('chat-content');
 			if (event.data != "") {
-				chat_content.innerHTML += event.data + "<br>";
+				chat_content.innerHTML = event.data;
+				//chat_content.innerHTML += event.data + "<br>";
 			}
 		},false);
 	</script>
